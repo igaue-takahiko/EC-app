@@ -1,0 +1,24 @@
+import { signOutAction } from './actions'
+import { push } from 'connected-react-router'
+
+export const signIn = () => {
+    return async (dispatch, getState) => {
+        const state = getState()
+        const isSignedIn = state.users.isSignedIn
+
+        if (!isSignedIn) {
+            const url = 'https://api.github.com/users/deatiger'
+
+            const response = await fetch(url).then(res => res.json()).catch(() => null)
+
+            const username = response.login
+
+            dispatch(signOutAction({
+                isSignedIn: true,
+                uid: "00001",
+                username: username
+            }))
+            dispatch(push('/'))
+        }
+    }
+}

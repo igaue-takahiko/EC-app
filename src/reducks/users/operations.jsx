@@ -3,6 +3,31 @@ import { push } from 'connected-react-router'
 import { db, FirebaseTimestamp, auth } from '../../firebase'
 import { isValidRequiredInput } from '../../function/common'
 
+export const listenAuthState = () => {
+    return async (dispatch) => {
+        return auth.onAuthStateChanged(user => {
+            if (user) {
+                const uid = user.uid
+
+                db.collection('users').doc(uid).get()
+                .then(snapshot => {
+                    const data = snapshot.data()
+
+                    dispatch(signInAction({
+                        isSignedIn: true,
+                        role: data.role,
+                        uid: uid,
+                        username: data.username,
+                    }))
+                    dispatch(push('/'))
+                })
+            } else {
+                dispatch(push('/signin'))
+            }
+        })
+    }
+}
+
 export const signIn = (email, password) => {
     return async (dispatch) => {
         if (!isValidRequiredInput(email, password)) {
@@ -31,6 +56,22 @@ export const signIn = (email, password) => {
                         })
                     }
                 })
+    }
+}
+
+export const resetPassword = (email) => {
+    return async (dispatch) => {
+        if (email === "") {
+            alert("必須項目が未入力です。")
+            return false
+        } else {
+            auth.sendPasswordResetEmail(email).then(() => {
+                alert('入力されたアドレスにパスワードリセットを送信しました。')
+                dispatch(push('/signin'))
+            }).catch(() => {
+                alert('パスワードリセットに失敗しました。通信環境がいい所で行って下さい。')
+            })
+        }
     }
 }
 
@@ -73,5 +114,14 @@ export const signUp = (username, email, password, confirmPassword) => {
                         })
                 }
             })
+    }
+}
+
+export const signOut = () => {
+    return async (dispatch) => {
+        auth.signOut().then(() => {
+            dispatch(signOutAction())
+            dispatch(push('/signin'))
+        })
     }
 }

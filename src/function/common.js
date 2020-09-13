@@ -1,4 +1,4 @@
-import { storage } from '../firebase'
+// import { storage } from '../firebase'
 
 export const isValidRequiredInput = (...args) => {
     let validator = true

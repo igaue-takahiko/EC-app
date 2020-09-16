@@ -91,7 +91,7 @@ const ProductCard = (props) => {
                 onClick={() => dispatch(push('/product/' + props.id))}
             />
             <CardContent className={classes.content}>
-                <div cnClick={() => dispatch(push('/product/' + props.id))}>
+                <div onClick={() => dispatch(push('/product/' + props.id))}>
                     <Typography className={classes.productName} color="textSecondary" component="p">
                         {props.name}
                     </Typography>
@@ -99,7 +99,7 @@ const ProductCard = (props) => {
                         ¥{price}
                     </Typography>
                 </div>
-                {isAdministrator && (
+                { (
                     <>
                         <IconButton className={classes.icon} onClick={handleClick}>
                             <MoreVertIcon />
@@ -114,7 +114,7 @@ const ProductCard = (props) => {
                             <MenuItem
                                 onClick={() => {
                                     dispatch(push('/product/edit/' + props.id))
-                                    handleClick()
+                                    handleClose()
                                 }}
                             >
                                 編集する

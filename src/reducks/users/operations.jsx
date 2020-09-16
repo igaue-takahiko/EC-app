@@ -3,6 +3,10 @@ import { push } from 'connected-react-router'
 import { db, FirebaseTimestamp, auth } from '../../firebase'
 import { isValidRequiredInput } from '../../function/common'
 
+export const addProductToCart = (addedProduct) => {
+    return async (dispatch, getState) => {}
+}
+
 export const listenAuthState = () => {
     return async (dispatch) => {
         return auth.onAuthStateChanged(user => {

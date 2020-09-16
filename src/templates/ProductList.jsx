@@ -8,11 +8,11 @@ import { getProducts } from '../reducks/products/selectors'
 
 const ProductList = () => {
     const dispatch = useDispatch()
-    const selector = useSelector((state) => state)
+    const selector = useSelector(state => state)
     const products = getProducts(selector)
 
     useEffect(() => {
-        dispatch(fetchProducts)
+        dispatch(fetchProducts())
     },[])
     return (
         <section className="c-section-wrapin">

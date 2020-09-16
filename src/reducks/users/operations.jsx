@@ -2,10 +2,24 @@ import { signInAction, signOutAction } from './actions'
 import { push } from 'connected-react-router'
 import { db, FirebaseTimestamp, auth } from '../../firebase'
 import { isValidRequiredInput } from '../../function/common'
+import { fetchProductsAction } from '../products/actions'
+
+const usersRef = db.collection('users')
 
 export const addProductToCart = (addedProduct) => {
     return async (dispatch, getState) => {
-        
+        const uid = getState().users.uid
+        const cartRef = usersRef.doc(uid).collection('cart').doc()
+        addedProduct['cartId'] = cartRef.id
+        await cartRef.set(addedProduct)
+        dispatch(push('/'))
+    }
+}
+
+
+export const fetchProductInCart = (products) => {
+    return async (dispatch) => {
+        dispatch(fetchProductsAction(products))
     }
 }
 
@@ -13,15 +27,19 @@ export const listenAuthState = () => {
     return async (dispatch) => {
         return auth.onAuthStateChanged(user => {
             if (user) {
-                const uid = user.uid
 
-                db.collection('users').doc(uid).get().then(snapshot => {
+                usersRef.doc(user.uid).get().then(snapshot => {
                     const data = snapshot.data()
+                    if (!data) {
+                        throw new Error('ユーザーデータが存在しません。')
+                    }
 
                     dispatch(signInAction({
+                        // customer_id: (data.customer_id) ? data.customer_id : "",
+                        // email: data.email,
                         isSignedIn: true,
                         role: data.role,
-                        uid: uid,
+                        uid: user.uid,
                         username: data.username,
                     }))
                 })
@@ -46,8 +64,7 @@ export const signIn = (email, password) => {
                     if (user) {
                         const uid = user.uid
 
-                        db.collection('users').doc(uid).get()
-                        .then(snapshot => {
+                        return usersRef.doc(uid).get().then(snapshot => {
                             const data = snapshot.data()
 
                             dispatch(signInAction({
@@ -112,7 +129,7 @@ export const signUp = (username, email, password, confirmPassword) => {
                         username: username,
                     }
 
-                    db.collection('users').doc(uid).set(userInitialData)
+                    usersRef.doc(uid).set(userInitialData)
                         .then(() => {
                             dispatch(push('/'))
                         })
@@ -122,7 +139,17 @@ export const signUp = (username, email, password, confirmPassword) => {
 }
 
 export const signOut = () => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
+        dispatch()
+        const uid = getState().users.id
+
+        //ユーザーのカート商品を削除
+        await usersRef.doc(uid).collection('cart').get().then(snapshots => {
+            snapshots.forEach(snapshot => {
+                usersRef.doc(uid).collection('cart').doc(snapshot.id).delete()
+            })
+        })
+
         auth.signOut().then(() => {
             dispatch(signOutAction())
             dispatch(push('/signin'))

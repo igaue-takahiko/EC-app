@@ -4,7 +4,7 @@ import { AppBar, createStyles, makeStyles, Toolbar } from '@material-ui/core'
 import { push } from 'connected-react-router'
 
 import { getIsSignedIn } from '../../reducks/users/selectors'
-import logo from '../../assets/img/icons/logo.png';
+import logo from '../../assets/img/icons/cartS2.png';
 import { HeaderMenus, ClosableDrawer } from './index'
 
 const useStyle = makeStyles(() => createStyles({
@@ -55,7 +55,7 @@ const Header = () => {
                     )}
                 </Toolbar>
             </AppBar>
-            <ClosableDrawer open={sideBarOpen} onClick={handleDrawerToggle} />
+            <ClosableDrawer open={sideBarOpen} onClose={handleDrawerToggle} />
         </div>
     )
 }

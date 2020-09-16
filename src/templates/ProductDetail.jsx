@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core'
@@ -51,6 +52,13 @@ const ProductDetail = () => {
         const timestamp = FirebaseTimestamp.now()
         dispatch(addProductToCart({
             added_at: timestamp,
+            description: product.description,
+            gender: product.gender,
+            images: product.images,
+            name: product.name,
+            price: product.price,
+            productId: product.id,
+            quantity: 1,
             size: selectedSize
         }))
     },[product])

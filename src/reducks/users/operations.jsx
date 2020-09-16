@@ -4,7 +4,9 @@ import { db, FirebaseTimestamp, auth } from '../../firebase'
 import { isValidRequiredInput } from '../../function/common'
 
 export const addProductToCart = (addedProduct) => {
-    return async (dispatch, getState) => {}
+    return async (dispatch, getState) => {
+        
+    }
 }
 
 export const listenAuthState = () => {

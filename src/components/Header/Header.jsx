@@ -5,7 +5,7 @@ import { push } from 'connected-react-router'
 
 import { getIsSignedIn } from '../../reducks/users/selectors'
 import logo from '../../assets/img/icons/logo.png';
-import { HeaderMenus } from './index'
+import { HeaderMenus, ClosableDrawer } from './index'
 
 const useStyle = makeStyles(() => createStyles({
     root: {
@@ -31,9 +31,12 @@ const Header = () => {
     const selector = useSelector(state => state)
     const isSignedIn = getIsSignedIn(selector)
 
-    const [ sideSideBarOpen, setSideBarOpen ] = useState(false)
+    const [ sideBarOpen, setSideBarOpen ] = useState(false)
 
     const handleDrawerToggle = useCallback((event, isOpen) => {
+        if (event.type === 'keydown' && (event.type === 'Tab' || event.key === 'Shift')) {
+            return
+        }
         setSideBarOpen(isOpen)
     },[setSideBarOpen])
 
@@ -47,11 +50,12 @@ const Header = () => {
                     />
                     {isSignedIn && (
                         <div className={classes.iconButton}>
-                            <HeaderMenus />
+                            <HeaderMenus handleDrawerToggle={handleDrawerToggle} />
                         </div>
                     )}
                 </Toolbar>
             </AppBar>
+            <ClosableDrawer open={sideBarOpen} onClick={handleDrawerToggle} />
         </div>
     )
 }

@@ -23,6 +23,6 @@ export const getUsername = createSelector(
 )
 
 export const getUserRole = createSelector(
-    [usersSelector],
+    [ usersSelector ],
     state => state.role
 )

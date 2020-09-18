@@ -14,9 +14,11 @@ export const deleteProduct = (id) => {
     }
 }
 
-export const fetchProducts = () => {
+export const fetchProducts = (gender, category) => {
     return async (dispatch) => {
         let query = productsRef.orderBy('updated_at', 'desc')
+        query = (gender !== "") ? query.where('gender', '==', gender) : query
+        query = (category !== "") ? query.where('category', '==', category) : query
 
         query.get().then(snapshots => {
             const productList = []

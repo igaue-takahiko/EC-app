@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IconButton, Badge } from '@material-ui/core'
 import { ShoppingCart, FavoriteBorder, Menu } from '@material-ui/icons';
 import { push } from 'connected-react-router';
-import { getProductsInCart, getUserId } from '../../reducks/users/selectors';
+
 import { db } from '../../firebase';
+import { getProductsInCart, getUserId } from '../../reducks/users/selectors';
 import { fetchProductInCart } from '../../reducks/users/operations';
 
 const HeaderMenus = (props) => {
@@ -51,11 +52,11 @@ const HeaderMenus = (props) => {
                 <FavoriteBorder />
             </IconButton>
             <IconButton
-                aria-label="Menu Item"
+                aria-label="Menu Items"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
-                onClick={(e) => props.handleDrawerToggle(e, true)}
+                onClick={(event) => props.handleDrawerToggle(event, true)}
             >
                 <Menu />
             </IconButton>

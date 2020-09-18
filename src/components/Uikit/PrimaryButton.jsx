@@ -2,19 +2,19 @@ import React from 'react'
 import Button  from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyle = makeStyles({
+const useStyle = makeStyles((theme) => ({
     "button":{
-        backgroundColor: "#4dd0e1",
+        backgroundColor: theme.palette.primary.main,
         color: "#000",
         fontSize: 16,
         height: 48,
         marginBottom: 16,
         width: 256,
         "&:hover": {
-            backgroundColor: "green"
+            backgroundColor: theme.palette.primary.light,
         }
     }
-})
+}))
 
 const PrimaryButton = (props) => {
     const classes = useStyle()

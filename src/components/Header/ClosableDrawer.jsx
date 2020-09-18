@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     Divider,
@@ -21,6 +22,7 @@ import { push } from 'connected-react-router'
 
 import { TextInput } from '../UIkit'
 import { signOut } from '../../reducks/users/operations'
+import { db } from '../../firebase'
 
 const useStyles = makeStyles((theme) => ({
     drawer: {
@@ -61,8 +63,19 @@ const ClosableDrawer = (props) => {
     const menus = [
         {func: selectMenu, label: "商品登録", icon: <AddCircle />, id: "register", value: "/product/edit"},
         {func: selectMenu, label: "注文履歴", icon: <History />, id: "history", value: "/product/history"},
-        {func: selectMenu, label: "プロフィール", icon: <Person />, id: "profile", value: "/user/mypage"},
+        {func: selectMenu, label: "会員情報", icon: <Person />, id: "profile", value: "/user/mypage"},
     ]
+
+    useEffect(() => {
+        db.collection('categories').orderBy('order', 'asc').get().then(snapshots => {
+            const list = []
+            snapshots.forEach(snapshots => {
+                const category = snapshots.data()
+                list.push({ func: selectMenu, label: category.name, id: category.id, value: `/?category=${category.id}` })
+            })
+            setFilters(prevState => [...prevState, ...list])
+        })
+    },[])
 
     const inputSearchKeyword = useCallback((event) => {
         setSearchKeyword(event.target.value)
@@ -75,13 +88,13 @@ const ClosableDrawer = (props) => {
                 variant="temporary"
                 anchor="right"
                 open={props.open}
-                onClose={(e) => props.onClose(e, false)}
+                onClose={(event) => props.onClose(event, false)}
                 classes={{ paper: classes.drawerPaper }}
                 ModalProps={{ keepMounted: true }}
             >
                 <div
-                    onClose={(e) => props.onClose(e, false)}
-                    onkeyDown={(e) => props.onClose(e, false)}
+                    onClose={(event) => props.onClose(event, false)}
+                    onkeyDown={(event) => props.onClose(event, false)}
                 >
                     <div className={classes.searchField}>
                         <TextInput
@@ -95,7 +108,7 @@ const ClosableDrawer = (props) => {
                     <Divider />
                     <List>
                         {menus.map(menu => (
-                                <ListItemIcon button key={menu.id} onClick={(e) => menu.func(e, menu.value)}>
+                                <ListItemIcon button key={menu.id} onClick={(event) => menu.func(event, menu.value)}>
                                     <ListItem>
                                         {menu.icon}
                                     </ListItem>
@@ -112,7 +125,7 @@ const ClosableDrawer = (props) => {
                     <Divider />
                     <List>
                         {filters.map(filter => (
-                            <ListItem button key={filter.id} onClick={(e) => filter.func(e, filter.value)}>
+                            <ListItem button key={filter.id} onClick={(event) => filter.func(event, filter.value)}>
                                 <ListItemText primary={filter.label} />
                             </ListItem>
                         ))}

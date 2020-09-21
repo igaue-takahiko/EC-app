@@ -1,4 +1,4 @@
-import { signInAction, signOutAction } from './actions'
+import { fetchOrdersHistoryAction, signInAction, signOutAction } from './actions'
 import { push } from 'connected-react-router'
 import { db, FirebaseTimestamp, auth } from '../../firebase'
 import { isValidRequiredInput } from '../../function/common'
@@ -16,6 +16,25 @@ export const addProductToCart = (addedProduct) => {
     }
 }
 
+export const fetchOrdersHistory = () => {
+    return async (dispatch, getState) => {
+        const uid = getState().users.uid
+        const list = []
+
+        db.collection('users').doc(uid)
+            .collection('orders')
+            .orderBy('update_at', 'desc')
+            .get()
+            .then(snapshots => {
+                snapshots.forEach(snapshot => {
+                    const data = snapshot.data()
+                    list.push(data)
+                })
+
+                dispatch(fetchOrdersHistoryAction(list))
+            })
+    }
+}
 
 export const fetchProductInCart = (products) => {
     return async (dispatch) => {
@@ -35,8 +54,8 @@ export const listenAuthState = () => {
                     }
 
                     dispatch(signInAction({
-                        // customer_id: (data.customer_id) ? data.customer_id : "",
-                        // email: data.email,
+                        customer_id: (data.customer_id) ? data.customer_id : "",
+                        email: data.email,
                         isSignedIn: true,
                         role: data.role,
                         uid: user.uid,

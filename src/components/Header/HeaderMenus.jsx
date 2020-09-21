@@ -12,11 +12,11 @@ import { fetchProductInCart } from '../../reducks/users/operations';
 const HeaderMenus = (props) => {
     const dispatch = useDispatch()
     const selector = useSelector((state) => state)
-    const userId = getUserId(selector)
+    const uid = getUserId(selector)
     let productsInCart = getProductsInCart(selector)
 
     useEffect(() => {
-        const unsubscribe = db.collection('users').doc(userId).collection('cart').onSnapshot(snapshots => {
+        const unsubscribe = db.collection('users').doc(uid).collection('cart').onSnapshot(snapshots => {
             snapshots.docChanges().forEach(change => {
                 const product = change.doc.data()
                 const changeType = change.type
@@ -56,7 +56,7 @@ const HeaderMenus = (props) => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
-                onClick={(event) => props.handleDrawerToggle(event, true)}
+                onClick={(event) => props.handleDrawerToggle(event)}
             >
                 <Menu />
             </IconButton>

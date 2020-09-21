@@ -76,7 +76,7 @@ const SetSizeArea = (props) => {
     },[props.sizes.length])
 
     return (
-        <div>
+        <div aria-label="サイズ展開">
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>

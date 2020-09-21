@@ -33,12 +33,12 @@ export const fetchProducts = (gender, category) => {
 
 export const orderProduct = (productsInCart, price) => {
     return async (dispatch, getState) => {
-        dispatch()
+        // dispatch()
 
         const uid = getState().users.uid
         const userRef = db.collection('users').doc(uid)
         const timestamp = FirebaseTimestamp.now()
-        let products = []
+        let products = {}
         let soldOutProducts = []
 
         const batch = db.batch()
@@ -62,13 +62,13 @@ export const orderProduct = (productsInCart, price) => {
                 }
             })
 
-            products.push({
+            products[product.productId] = {
                 id: product.productId,
                 images: product.images,
                 name: product.name,
                 price: product.price,
                 size: product.size
-            })
+            }
 
             batch.update(
                 productsRef.doc(product.productId),

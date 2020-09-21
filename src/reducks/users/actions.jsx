@@ -34,3 +34,11 @@ export const signOutAction = () => {
         payload: null
     }
 }
+
+export const UPDATE_USER_STATE = "UPDATE_USER_STATE"
+export const updateUserStateAction = (userState) => {
+    return {
+        type: "UPDATE_USER_STATE",
+        payload: userState
+    }
+}

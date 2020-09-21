@@ -57,7 +57,7 @@ const ClosableDrawer = (props) => {
     const [ filters, setFilters ] = useState([
         {func: selectMenu, label: "全て", id: "all", value: "/"},
         {func: selectMenu, label: "メンズ", id: "male", value: "/?gender=male"},
-        {func: selectMenu, label: "レディース", id: "female", value: "/gender-female"},
+        {func: selectMenu, label: "レディース", id: "female", value: "/gender=female"},
     ])
 
     const menus = [
@@ -93,8 +93,8 @@ const ClosableDrawer = (props) => {
                 ModalProps={{ keepMounted: true }}
             >
                 <div
-                    onClose={(event) => props.onClose(event, false)}
-                    onkeyDown={(event) => props.onClose(event, false)}
+                    onClose={(event) => props.onClose(event)}
+                    onkeyDown={(event) => props.onClose(event)}
                 >
                     <div className={classes.searchField}>
                         <TextInput
@@ -108,12 +108,12 @@ const ClosableDrawer = (props) => {
                     <Divider />
                     <List>
                         {menus.map(menu => (
-                                <ListItemIcon button key={menu.id} onClick={(event) => menu.func(event, menu.value)}>
-                                    <ListItem>
+                                <ListItem button key={menu.id} onClick={(event) => menu.func(event, menu.value)}>
+                                    <ListItemIcon>
                                         {menu.icon}
-                                    </ListItem>
+                                    </ListItemIcon>
                                     <ListItemText primary={menu.label} />
-                                </ListItemIcon>
+                                </ListItem>
                         ))}
                         <ListItem button key="logout" onClick={() => dispatch(signOut())}>
                             <ListItemIcon>

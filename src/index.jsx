@@ -5,6 +5,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import * as History from 'history'
 import { MuiThemeProvider } from '@material-ui/core';
 
+import "./assets/reset.css"
+import "./assets/style.css"
 import { theme } from './assets/theme';
 import createStore from './reducks/store/store'
 import App from './App';

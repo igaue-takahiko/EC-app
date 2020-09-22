@@ -1,3 +1,11 @@
+export const EDIT_USER_PROFILE = "EDIT_USER_PROFILE";
+export const editProfileStateAction = (userProfile) => {
+    return {
+        type: "EDIT_USER_PROFILE",
+        payload: userProfile
+    }
+}
+
 export const FETCH_ORDERS_HISTORY = "FETCH_ORDERS_HISTORY"
 export const fetchOrdersHistoryAction = (orders) => {
     return {

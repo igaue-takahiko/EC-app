@@ -3,15 +3,21 @@ import  initialState from '../store/initialState'
 
 export const UsersReducer = (state = initialState.users, action) =>{
     switch (action.type) {
+        case Actions.EDIT_USER_PROFILE:
+            return {
+                ...state,
+                icon_path: action.payload.icon_path,
+                username: action.payload.username
+            }
         case Actions.FETCH_ORDERS_HISTORY:
             return {
                 ...state,
-                orders: [...state.payload]
+                orders: [...action.payload]
             }
         case Actions.FETCH_PRODUCTS_IN_CART:
             return {
                 ...state,
-                cart: [...state.payload]
+                cart: [...action.payload]
             }
         case Actions.SIGN_IN:
             return {

@@ -9,6 +9,7 @@ import "./assets/reset.css"
 import "./assets/style.css"
 import { theme } from './assets/theme';
 import createStore from './reducks/store/store'
+import { ErrorBoundary } from './components/UIkit';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
@@ -19,7 +20,9 @@ ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <MuiThemeProvider theme={theme}>
-                <App />
+                <ErrorBoundary>
+                    <App />
+                </ErrorBoundary>
             </MuiThemeProvider>
         </ConnectedRouter>
     </Provider>,

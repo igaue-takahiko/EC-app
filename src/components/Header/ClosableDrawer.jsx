@@ -50,7 +50,7 @@ const ClosableDrawer = (props) => {
 
     const selectMenu = (event, path) => {
         dispatch(push(path))
-        props.onClose(event)
+        props.onClose(event, false)
     }
 
     const [ searchKeyword, setSearchKeyword ] = useState("")
@@ -62,7 +62,7 @@ const ClosableDrawer = (props) => {
 
     const menus = [
         {func: selectMenu, label: "商品登録", icon: <AddCircle />, id: "register", value: "/product/edit"},
-        {func: selectMenu, label: "注文履歴", icon: <History />, id: "history", value: "/product/history"},
+        {func: selectMenu, label: "注文履歴", icon: <History />, id: "history", value: "/order/history"},
         {func: selectMenu, label: "会員情報", icon: <Person />, id: "profile", value: "/user/mypage"},
     ]
 

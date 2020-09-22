@@ -48,7 +48,7 @@ const CartListItem = (props) => {
                 </ListItemAvatar>
                 <div className={classes.text}>
                     <ListItemText primary={props.product.name} secondary={`サイズ: ${props.product.size}`} />
-                    <ListItemText primary={`¥${price}`}/>
+                    <ListItemText primary={`¥ ${price}`}/>
                 </div>
                 <IconButton onClick={() => removeProductFromCart(props.product.cartId)}>
                     <Delete />

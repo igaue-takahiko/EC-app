@@ -39,10 +39,8 @@ export const fetchOrdersHistory = () => {
         const uid = getState().users.uid
         const list = []
 
-        db.collection('users').doc(uid)
-            .collection('orders')
-            .orderBy('update_at', 'desc')
-            .get()
+        usersRef.doc(uid).collection('orders')
+            .orderBy('updated_at', 'desc').get()
             .then(snapshots => {
                 snapshots.forEach(snapshot => {
                     const data = snapshot.data()

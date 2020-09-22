@@ -32,21 +32,25 @@ const OrderedProducts = (props) => {
 
     return (
         <List>
-            {products.map(product => (
-                <div>
-                    <ListItem className={classes.list} key= {product.id}>
-                        <ListItemAvatar>
-                            <img className={classes.image} src={product.images[0].path} alt="商品のトップ画像" />
-                        </ListItemAvatar>
-                        <div className={classes.text}>
-                            <ListItemText primary={product.name} secondary={`サイズ: ${product.size}`} />
-                            <ListItemText primary={`¥ ${product.price.toLocaleString()}`} />
-                        </div>
-                        <PrimaryButton label={'商品詳細を見る'} onClick={() => goToProductPage(product.id)} />
-                    </ListItem>
-                    <Divider />
-                </div>
-            ))}
+            {Object.keys(products).map(key => {
+                const product = products[key]
+
+                return(
+                    <>
+                        <ListItem className={classes.list} key={product.id}>
+                            <ListItemAvatar>
+                                <img className={classes.image} src={product.images[0].path} alt="商品のトップ画像" />
+                            </ListItemAvatar>
+                            <div className={classes.text}>
+                                <ListItemText primary={product.name} secondary={`サイズ: ${product.size}`} />
+                                <ListItemText primary={`¥ ${product.price.toLocaleString()}`} />
+                            </div>
+                            <PrimaryButton label={'商品詳細を見る'} onClick={() => goToProductPage(product.id)} />
+                        </ListItem>
+                        <Divider />
+                    </>
+                )
+            })}
         </List>
     )
 }

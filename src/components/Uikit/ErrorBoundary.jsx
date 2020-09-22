@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { functions } from 'firebase'
+import { functions } from '../../firebase/index'
 
 class ErrorBoundary extends Component {
     constructor(props) {

@@ -10,6 +10,7 @@ const UserMyPage = () => {
     const selector = useSelector(state => state)
     const username = getUsername(selector)
 
+
     const transition = useCallback(path => {
         dispatch(push(path))
     },[])

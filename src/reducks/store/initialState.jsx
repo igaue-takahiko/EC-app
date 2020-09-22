@@ -1,4 +1,8 @@
 const initialState = {
+    loading: {
+        state: false,
+        text: "",
+    },
     products: {
         list: []
     },
@@ -9,6 +13,7 @@ const initialState = {
         username: "",
         cart: [],
         orders: [],
+        payment_method: "",
     }
 }
 

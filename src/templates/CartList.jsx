@@ -23,11 +23,11 @@ const CartList = () => {
 
     const getToOrder = useCallback(() => {
         dispatch(push('/order/confirm'))
-    },[])
+    },[dispatch])
 
     const backToTop = useCallback(() => {
         dispatch(push('/'))
-    },[])
+    },[dispatch])
 
     return (
         <section className="c-section-wrapin">

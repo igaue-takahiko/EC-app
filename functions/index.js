@@ -19,11 +19,11 @@ exports.stripeCustomer = functions.https.onRequest((req, res) => {
             sendResponse(res, 405, { error: "Invalid Request method!" })
         }
 
-        return stripe.customer.retrieve({
+        return stripe.customers.create({
             description: "EC App demo user",
             email: req.body.email,
             metadata: { userId: req.body.userId },
-            payment_method:req.body.paymentMethod
+            payment_method: req.body.paymentMethod
         }).then((customer) => {
             sendResponse(res, 200, customer)
         }).catch(error => {

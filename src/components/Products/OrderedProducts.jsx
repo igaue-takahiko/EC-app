@@ -28,7 +28,7 @@ const OrderedProducts = (props) => {
 
     const goToProductPage = useCallback((id) => {
         dispatch(push('/product/' + id))
-    },[])
+    },[dispatch])
 
     return (
         <List>

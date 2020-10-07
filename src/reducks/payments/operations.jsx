@@ -27,7 +27,7 @@ export const registerCard = (stripe, elements, customerId) => {
     return async (dispatch, getState) => {
         const user = getState().users
         const email = user.email
-        const uid = user.id
+        const uid = user.uid
         const username = user.username
 
         dispatch(showLoadingAction("登録中..."))
@@ -59,7 +59,7 @@ export const registerCard = (stripe, elements, customerId) => {
             return
         }
 
-        const paymentMethodId = paymentMethod?.id
+        const paymentMethodId = paymentMethod.id
 
         //Stripeで顧客を作成する
         if (customerId === "") {
@@ -92,16 +92,24 @@ export const registerCard = (stripe, elements, customerId) => {
                 })
             }
         } else {
-            const updateUserState = { payment_method_id: paymentMethodId }
-            db.collection('users').doc(uid).update(updateUserState).then(() => {
-                dispatch(updateUserStateAction(updateUserState))
+            const prevPaymentMethodId = getState().users.payment_method_id
+            const updatedPaymentMethod = await updatePaymentMethod(customerId, prevPaymentMethodId, paymentMethodId)
+
+            if (!updatedPaymentMethod) {
                 dispatch(hideLoadingAction())
-                alert('お客様情報を更新しました。')
-                dispatch(push('/user/mypage'))
-            }).catch(() => {
-                dispatch(hideLoadingAction())
-                alert('お客様情報の登録に失敗しました。')
-            })
+                alert('お客様情報に失敗しました。')
+            } else {
+                const updateUserState = { payment_method_id: paymentMethodId }
+                db.collection('users').doc(uid).update(updateUserState).then(() => {
+                    dispatch(updateUserStateAction(updateUserState))
+                    dispatch(hideLoadingAction())
+                    alert('お客様情報を更新しました。')
+                    dispatch(push('/user/mypage'))
+                }).catch(() => {
+                    dispatch(hideLoadingAction())
+                    alert('お客様情報の登録に失敗しました。')
+                })
+            }
         }
     }
 }
@@ -120,7 +128,7 @@ export const retrievePaymentMethod = async (paymentMethodId) => {
 }
 
 export const updatePaymentMethod = async (customerId, prevPaymentMethodId, nextPaymentMethodId) => {
-    const response = await fetch(BASE_URL + '/v1/updatePaymentMethod', {
+    const response = await fetch(`${BASE_URL}/v1/updatePaymentMethod`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({

@@ -5,7 +5,7 @@ import { theme } from '../../assets/theme'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 import { GreyButton, PrimaryButton, TextDetail } from '../UIkit';
 import { getCustomerId, getPaymentMethodId } from '../../reducks/users/selectors'
-import { registerCard, retrievePaymentMethod } from '../../reducks/payments/operetions'
+import { registerCard, retrievePaymentMethod } from '../../reducks/payments/operations'
 import { push } from 'connected-react-router'
 import { hideLoadingAction, showLoadingAction } from '../../reducks/loading/actions'
 
@@ -20,16 +20,16 @@ const PaymentEdit = () => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const stripe = useStripe()
-    const element = useElements()
+    const elements = useElements()
     const selector = useSelector(state => state)
     const customerId = getCustomerId(selector)
     const paymentMethodId = getPaymentMethodId(selector)
 
-    const [card, setCard ] = useState({})
+    const [ card, setCard ] = useState({})
 
     const register = useCallback(() => {
-        dispatch(registerCard(stripe, element, customerId))
-    },[stripe, element, customerId])
+        dispatch(registerCard(stripe, elements, customerId))
+    },[stripe, elements, customerId])
 
     const goBackToMyPage = useCallback(() => {
         dispatch(push('/user/mypage'))
@@ -37,7 +37,7 @@ const PaymentEdit = () => {
 
     const cardNumber = useMemo(() => {
         if (card.last4) {
-            return "**** **** **** ****" + card.last4
+            return `**** **** **** ${card.last4}`
         } else {
             return "未登録"
         }
@@ -45,14 +45,14 @@ const PaymentEdit = () => {
 
     useEffect(() => {
         (async() => {
-            dispatch(showLoadingAction());
+            dispatch(showLoadingAction())
             const paymentMethod = await retrievePaymentMethod(paymentMethodId)
-            dispatch(hideLoadingAction());
+            dispatch(hideLoadingAction())
             if (paymentMethod) {
                 setCard(paymentMethod)
             }
         })()
-    },[customerId])
+    },[paymentMethodId])
 
     return (
         <section className="c-section-container">
@@ -84,11 +84,11 @@ const PaymentEdit = () => {
             <div className="module-spacer--medium" />
             <div>
                 <p>
-                このECアプリではStripeのテスト用カードを使うことができます。<br/>
+                    このECアプリではStripeのテスト用カードを使うことができます。<br/>
                     実際に決済されることはないので安心して使ってください。
                 </p>
                 <p>
-                CVCコード、郵便番号はどんな数字でもOKです。有効期限は未来の年月ならなんでもOK。<br/>
+                    CVCコード、郵便番号はどんな数字でもOKです。有効期限は未来の年月ならなんでもOK。<br/>
                 </p>
                 <div className="module-spacer--small"/>
                 <TextDetail label={"VISA"} value={"4242 4242 4242 4242"} key={"test-visa"}/>

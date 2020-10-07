@@ -14,7 +14,7 @@
         "@types/react-redux": "^7.1.9",
         "@types/react-router": "^5.1.8",
         "connected-react-router": "^6.8.0",
-        "firebase": "^7.19.1",
+        "firebase": "^7.22.1",
         "history": "^4.10.1",
         "html-react-parser": "^0.14.0",
         "react": "^16.13.1",

@@ -1,5 +1,6 @@
 import { push } from "connected-react-router"
 import { db, FirebaseTimestamp } from "../../firebase"
+import { hideLoadingAction, showLoadingAction } from "../loading/actions"
 import { deleteProductAction, fetchProductsAction } from "./actions"
 
 const productsRef = db.collection('products')
@@ -33,7 +34,7 @@ export const fetchProducts = (gender, category) => {
 
 export const orderProduct = (productsInCart, price) => {
     return async (dispatch, getState) => {
-        // dispatch()
+        dispatch(showLoadingAction("決済処理中..."))
 
         const uid = getState().users.uid
         const userRef = db.collection('users').doc(uid)
@@ -102,6 +103,7 @@ export const orderProduct = (productsInCart, price) => {
 
                 orderRef.set(history)
 
+                dispatch(hideLoadingAction())
                 dispatch(push('/order/complete'))
             }).catch(() => {
                 alert("注文に失敗しました。通信環境をご確認の上、もう一度お試し下さい。")

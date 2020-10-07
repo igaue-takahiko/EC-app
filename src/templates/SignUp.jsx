@@ -42,7 +42,7 @@ const SignUp = () => {
                 rows={1} value={email} type={"email"} onChange={inputEmail}
             />
             <TextInput
-                fullWidth={true} label={"パスワード"} multiline={false} required={true}
+                fullWidth={true} label={"パスワード(半角英数6文字以上)"} multiline={false} required={true}
                 rows={1} value={password} type={"password"} onChange={inputPassword}
             />
             <TextInput
@@ -56,7 +56,7 @@ const SignUp = () => {
                     onClick={() => {dispatch(signUp(username, email, password, confirmPassword))}}
                 />
                 <div className="module-spacer--medium" />
-                <p onClick={() => dispatch(push('/signin'))}>アカウントをお持ちの方はこちら</p>
+                <p className="u-text-small" onClick={() => dispatch(push('/signin'))}>アカウントをお持ちの方はこちら</p>
             </div>
         </div>
     )

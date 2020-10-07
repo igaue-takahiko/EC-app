@@ -13,7 +13,8 @@ const UserMyPage = () => {
 
     const transition = useCallback(path => {
         dispatch(push(path))
-    },[])
+    },[dispatch])
+
     return (
         <section className="c-section-container">
             <h2 className="u-text__headline u-text-center">マイページ</h2>

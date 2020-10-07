@@ -23,6 +23,7 @@ import { push } from 'connected-react-router'
 import { TextInput } from '../UIkit'
 import { signOut } from '../../reducks/users/operations'
 import { db } from '../../firebase'
+import { getUserRole } from '../../reducks/users/selectors'
 
 const useStyles = makeStyles((theme) => ({
     drawer: {
@@ -43,10 +44,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ClosableDrawer = (props) => {
-    const { container } = props;
+    const { container } = props
     const classes = useStyles()
     const dispatch = useDispatch()
     const selector = useSelector(state => state)
+    const userRole = getUserRole(selector)
+    const isAdministrator = (userRole === "administrator")
 
     const selectMenu = (event, path) => {
         dispatch(push(path))
@@ -63,7 +66,7 @@ const ClosableDrawer = (props) => {
     const menus = [
         {func: selectMenu, label: "商品登録", icon: <AddCircle />, id: "register", value: "/product/edit"},
         {func: selectMenu, label: "注文履歴", icon: <History />, id: "history", value: "/order/history"},
-        {func: selectMenu, label: "会員情報", icon: <Person />, id: "profile", value: "/user/mypage"},
+        {func: selectMenu, label: "プロフィール", icon: <Person />, id: "profile", value: "/user/mypage"},
     ]
 
     useEffect(() => {

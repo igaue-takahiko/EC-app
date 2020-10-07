@@ -8,6 +8,8 @@ const initialState = {
     },
     users: {
         isSignedIn: false,
+        customer_id: "",
+        email: "",
         role: "",
         uid: "",
         username: "",

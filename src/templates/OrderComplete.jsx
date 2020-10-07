@@ -9,7 +9,7 @@ const OrderComplete = () => {
 
     const goBackToTop = useCallback(() => {
         dispatch(push('/'))
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="c-section-container">

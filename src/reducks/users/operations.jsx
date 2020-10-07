@@ -73,6 +73,7 @@ export const listenAuthState = () => {
                         customer_id: (data.customer_id) ? data.customer_id : "",
                         email: data.email,
                         isSignedIn: true,
+                        payment_method_id: (data.payment_method_id) ? data.payment_method_id : "",
                         role: data.role,
                         uid: user.uid,
                         username: data.username,
@@ -120,6 +121,7 @@ export const signIn = (email, password) => {
                             email: data.email,
                             isSignedIn: true,
                             role: data.role,
+                            payment_method_id: (data.payment_method_id) ? data.payment_method_id : "",
                             uid: uid,
                             username: data.username,
                         }))
@@ -183,7 +185,8 @@ export const signUp = (username, email, password, confirmPassword) => {
                         create_at: timestamp,
                         email: email,
                         role: "customer",
-                        idi: uid,
+                        payment_method_id: "",
+                        uid: uid,
                         update_at: timestamp,
                         username: username,
                     }
@@ -193,6 +196,10 @@ export const signUp = (username, email, password, confirmPassword) => {
                         dispatch(hideLoadingAction())
                     })
                 }
+            }).catch((error) => {
+                dispatch(hideLoadingAction())
+                alert('アカウント登録に失敗しました。もう１度お試しください。')
+                throw new Error(error)
             })
     }
 }

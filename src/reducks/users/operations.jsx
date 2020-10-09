@@ -182,12 +182,12 @@ export const signUp = (username, email, password, confirmPassword) => {
 
                     const userInitialData = {
                         customer_id: "",
-                        create_at: timestamp,
+                        created_at: timestamp,
                         email: email,
                         role: "customer",
                         payment_method_id: "",
                         uid: uid,
-                        update_at: timestamp,
+                        updated_at: timestamp,
                         username: username,
                     }
 

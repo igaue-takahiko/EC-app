@@ -45,7 +45,7 @@ const Header = () => {
             <AppBar position="fixed" className={classes.menuBar}>
                 <Toolbar className={classes.toolbar}>
                     <img
-                        alt="logo" src={logo} width="128px"
+                        alt="logo" src={logo} width="128px" className="logo"
                         onClick={() => dispatch(push('/'))} role="button"
                     />
                     {isSignedIn && (

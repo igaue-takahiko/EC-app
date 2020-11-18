@@ -29,7 +29,7 @@ const OrderHistory = () => {
 
     useEffect(() => {
         dispatch(fetchOrdersHistory())
-    },[])
+    },[dispatch])
 
     return (
         <section className="c-section-wrapin">

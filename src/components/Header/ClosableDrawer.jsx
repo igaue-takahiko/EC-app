@@ -97,7 +97,7 @@ const ClosableDrawer = (props) => {
             >
                 <div
                     onClose={(event) => props.onClose(event)}
-                    onkeyDown={(event) => props.onClose(event)}
+                    onKeyDown={(event) => props.onClose(event)}
                 >
                     <div className={classes.searchField}>
                         <TextInput

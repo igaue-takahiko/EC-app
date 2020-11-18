@@ -66,6 +66,10 @@
     flex-flow: column;
 }
 
+.logo {
+    cursor: pointer;
+}
+
 .p-grid__row {
     display: flex;
     flex-flow: row wrap;
@@ -119,6 +123,11 @@
 
 .u-text-small {
     font-size: .9rem;
+    cursor: pointer;
+}
+
+.u-text-small:hover {
+    color: #4dd0e1;
 }
 
 .u-text__link-none {

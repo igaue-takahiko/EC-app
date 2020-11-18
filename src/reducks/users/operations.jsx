@@ -1,6 +1,6 @@
 import { editProfileStateAction, fetchOrdersHistoryAction, signInAction, signOutAction } from './actions'
 import { goBack, push } from 'connected-react-router'
-import { db, FirebaseTimestamp, auth } from '../../firebase'
+import { db, FirebaseTimestamp, auth, googleAuth } from '../../firebase'
 import { isValidEmailFormat, isValidRequiredInput } from '../../function/common'
 import { fetchProductsAction, initProductsAction } from '../products/actions'
 import { hideLoadingAction, showLoadingAction } from '../loading/actions'
@@ -150,6 +150,10 @@ export const resetPassword = (email) => {
     }
 }
 
+export const signInGoogle = async () => {
+    await auth.signInWithPopup(googleAuth).catch(error => alert(error.message))
+}
+
 export const signUp = (username, email, password, confirmPassword) => {
     return async (dispatch) => {
         if (!isValidRequiredInput(email, password, confirmPassword)) {
@@ -207,7 +211,7 @@ export const signUp = (username, email, password, confirmPassword) => {
 export const signOut = () => {
     return async (dispatch, getState) => {
         dispatch(showLoadingAction("Sign out..."))
-        const uid = getState().users.id
+        const uid = getState().users.uid
 
         //ユーザーのカート商品を削除
         await usersRef.doc(uid).collection('cart').get().then(snapshots => {

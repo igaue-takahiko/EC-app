@@ -1,9 +1,9 @@
-import { push } from 'connected-react-router'
 import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { push } from 'connected-react-router'
 
 import { TextInput, PrimaryButton } from '../components/UIkit'
-import { signUp } from '../reducks/users/operations'
+import { signUp, signInGoogle } from '../reducks/users/operations'
 
 const SignUp = () => {
     const dispatch = useDispatch()
@@ -54,6 +54,10 @@ const SignUp = () => {
                 <PrimaryButton
                     label={"アカウントを登録する"}
                     onClick={() => {dispatch(signUp(username, email, password, confirmPassword))}}
+                />
+                <PrimaryButton
+                    label={"Sign with google"}
+                    onClick={signInGoogle}
                 />
                 <div className="module-spacer--medium" />
                 <p className="u-text-small" onClick={() => dispatch(push('/signin'))}>アカウントをお持ちの方はこちら</p>

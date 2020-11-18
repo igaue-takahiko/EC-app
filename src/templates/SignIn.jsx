@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 
 import { TextInput, PrimaryButton } from '../components/UIkit'
-import { signIn } from '../reducks/users/operations'
+import { signIn, signInGoogle } from '../reducks/users/operations'
+
 
 const SignIn = () => {
     const dispatch = useDispatch()
@@ -36,6 +37,10 @@ const SignIn = () => {
                 <PrimaryButton
                     label={"Sign in"}
                     onClick={() => dispatch(signIn(email, password))}
+                />
+                <PrimaryButton
+                    label={"Sign with google"}
+                    onClick={signInGoogle}
                 />
                 <div className="module-spacer--medium" />
                 <p className="u-text-small" onClick={() => dispatch(push('/signup'))}>アカウントをお持ちでない方はこちら</p>

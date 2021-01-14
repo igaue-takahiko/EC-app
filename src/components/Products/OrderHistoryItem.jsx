@@ -12,7 +12,7 @@ const OrderHistoryItem = (props) => {
     const products = props.order.products
 
     return (
-        <div>
+        <>
             <div className="module-spacer--small" />
             <TextDetail label={"注文ID"} value={props.order.id} />
             <TextDetail label={"注文日時"} value={orderedDatetime} />
@@ -23,7 +23,7 @@ const OrderHistoryItem = (props) => {
             )}
             <div className="module-spacer--extra-small" />
             <Divider />
-        </div>
+        </>
     )
 }
 

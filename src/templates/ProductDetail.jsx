@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core'
@@ -61,14 +60,14 @@ const ProductDetail = () => {
             quantity: 1,
             size: selectedSize
         }))
-    },[product])
+    },[dispatch, product])
 
     useEffect(() => {
         db.collection('products').doc(id).get().then(doc => {
             const data = doc.data()
             setProduct(data)
         })
-    },[])
+    },[id])
 
     return (
         <section className="c-section-wrapin">

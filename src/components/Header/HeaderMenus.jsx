@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton, Badge } from '@material-ui/core'
@@ -30,6 +29,7 @@ const HeaderMenus = (props) => {
                         productsInCart[index] = product
                         break
                     case 'removed':
+                        // eslint-disable-next-line react-hooks/exhaustive-deps
                         productsInCart = productsInCart.filter(product => product.cartId !== change.doc.id)
                         break
                     default:

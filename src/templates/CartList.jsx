@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { List, makeStyles } from '@material-ui/core'

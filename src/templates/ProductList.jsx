@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -17,7 +16,7 @@ const ProductList = () => {
 
     useEffect(() => {
         dispatch(fetchProducts(gender, category))
-    },[query])
+    },[category, dispatch, gender, query])
     return (
         <section className="c-section-wrapin">
             <div className="p-grid__row">

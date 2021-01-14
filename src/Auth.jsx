@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { listenAuthState } from './reducks/users/operations';
@@ -13,7 +12,7 @@ const Auth = ({children}) => {
         if (!isSignedIn) {
             dispatch(listenAuthState())
         }
-    },[])
+    },[dispatch, isSignedIn])
 
     if (!isSignedIn) {
         return <></>

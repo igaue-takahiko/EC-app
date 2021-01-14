@@ -29,7 +29,7 @@ const PaymentEdit = () => {
 
     const register = useCallback(() => {
         dispatch(registerCard(stripe, elements, customerId))
-    },[stripe, elements, customerId])
+    },[dispatch, stripe, elements, customerId])
 
     const goBackToMyPage = useCallback(() => {
         dispatch(push('/user/mypage'))
@@ -52,7 +52,7 @@ const PaymentEdit = () => {
                 setCard(paymentMethod)
             }
         })()
-    },[paymentMethodId])
+    },[dispatch, paymentMethodId])
 
     return (
         <section className="c-section-container">

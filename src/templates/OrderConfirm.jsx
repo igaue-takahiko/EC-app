@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Divider, List, makeStyles } from '@material-ui/core'
@@ -45,7 +44,7 @@ const OrderConfirm = () => {
 
     const order = useCallback(() => {
         dispatch(orderProduct(productsInCart, total))
-    },[productsInCart,total])
+    },[dispatch, productsInCart, total])
 
     return (
         <section className="c-section-wrapin">
